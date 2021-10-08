@@ -1,0 +1,47 @@
+Hardware / Device：HP ProLiant ML110 Generation 5 (G5)
+1. What is QuickSpecs Document ?
+描述硬體零組件的規格
+2. What is SpareParts Document ?
+描述伺服器組成的元件
+3. What is User Manual Document ?
+操作手冊包含BIOS的操作說明
+✓ OS / Platform：Windows 2008 R2 Standard
+✓ Task:
+1. Create AD (Active Directory ) Server
+a. What is GC (Global Catalog) ?
+儲存DC樹系內所有網域中每一個AD資料庫物件
+b. 檢視 AD 五大角色 (FSMO) 及位置 ?
+①將架構主機放在樹系根域的 PDC 上。
+②將網域命名主機置於樹系根 PDC 上。
+③將 PDC 放在具有相同 Active Directory 網站和網域中副本網域控制站的可靠中樞網站上的最佳硬體上。
+④將 RID 主機放在相同網域中的網域 PDC 上。
+⑤舊版指南建議將基礎結構主機放在非全域目錄伺服器上。
+2. Create DNS (Domain Name System) Server
+a. Forward lookup zone ?正解
+Forward lookup zones resolve names to IP addresses 
+b. Reverse lookup zone ?反解
+Reverse lookup zones resolve IP addresses to names.
+c. Zone types ?
+Primary zone 主要區域 DC所在forest ,Secondary zone 次要區域, stub zone
+d. Start of Authority (SOA) ?
+
+e. Name Servers ?
+f. Host (A 記錄) ?
+IPv4的主機記錄
+g. Pointer (PTR) ?
+h. Canonical Name (CNAME) or Alias ?
+別名的資源記錄
+i. Mail Exchange (MX) ?
+郵件交換伺服器
+
+3. Create NTP (Network Time Protocol) Server
+a. How To Configure NTP Server in Windows Server 2008 R2 ?
+①winkey+R → 輸入regedit
+②HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Win32Time\Config 在AnnounceFlags按右鍵修改值：5
+③HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Win32Time\TimeProviders\NtpServer 在Enabled按右鍵修改值：1
+④重啟windows Time 服務
+  net stop w32time && net start w32time
+⑤允許防火牆通過UDP 123
+netsh firewall add portopening protocol = UDP port = 123 name = NTP_SERVER
+b. How to check the NTP client sync 
+w32tm /query /peers
